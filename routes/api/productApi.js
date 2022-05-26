@@ -16,7 +16,8 @@ router.get("/cart/:id", async function (req, res, next) {
   res.cookie("cart",cart,{
 SameSite : "none",
 Secure: true,
-httpOnly: true
+httpOnly: true,
+domain:"https://ar-medicare.vercel.app/medicines"
 });
   res.send(cart);
   
