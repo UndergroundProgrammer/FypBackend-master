@@ -22,7 +22,7 @@ const dotenv = require('dotenv');
 var app = express();
 
 
-app.use(cors({origin:true,credentials:true}));
+app.use(cors({origin:"https://ar-medicare.vercel.app/",credentials:true}));
 dotenv.config();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
