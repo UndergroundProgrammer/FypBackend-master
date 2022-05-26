@@ -14,10 +14,10 @@ router.get("/cart/:id", async function (req, res, next) {
   cart.push(product);
   console.log("added to cart");
   res.cookie("cart",cart,{
-
+SameSite :'none',
 secure: true,
 httpOnly: true,
-SameSite :'none'
+
 });
   res.send(cart);
 });
