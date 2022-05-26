@@ -12,7 +12,7 @@ router.post('/login',async (req, res)=>{
                                 isAdmin :true},process.env.ADMIN_SEC)
       return res.status(200).json({accessToken:token});
     }else{
-      return res.status(200).send({message:"Username or password incorrect"});
+      return res.status(422).send({message:"Username or password incorrect"});
     }
   }catch(err){
       return res.status(500).send({message:"This product is invalid"});
