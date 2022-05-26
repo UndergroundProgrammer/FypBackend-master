@@ -17,7 +17,7 @@ router.get("/cart/:id", async function (req, res, next) {
 SameSite : "none",
 Secure: true,
 httpOnly: true,
-domain:"https://ar-medicare.vercel.app/medicines"
+domain:"ar-medicare-backend.herokuapp.com"
 });
   res.send(cart);
   
