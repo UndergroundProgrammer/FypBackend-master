@@ -29,7 +29,12 @@ router.get("/cart/remove/:id", async function (req, res, next) {
     cart.findIndex((c) => c._id == req.params.id),
     1
   );
-  res.cookie("cart", cart);
+  res.cookie("cart", cart,{
+sameSite :'None',
+secure: true,
+httpOnly: true,
+
+});
   res.send(cart);
 });
 
