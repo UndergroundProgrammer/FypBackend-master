@@ -13,12 +13,12 @@ router.get("/cart/:id", async function (req, res, next) {
   if (req.cookies.cart) cart = req.cookies.cart;
   cart.push(product);
   console.log("added to cart");
-  res.cookie("cart",cart,[{
-SameSite : "None",
-secure: true,
+  res.cookie("cart",cart,{
+SameSite : "none",
+Secure: true,
 domain: "ar-medicare.vercel.app",
 httpOnly: true
-}]);
+});
   res.send(cart);
   
 });
