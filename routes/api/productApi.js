@@ -14,7 +14,7 @@ router.get("/cart/:id", async function (req, res, next) {
   cart.push(product);
   console.log("added to cart");
   res.cookie("cart",cart,[{
-sameSite : "None",
+SameSite : "None",
 secure: true,
 domain: "ar-medicare.vercel.app",
 httpOnly: true
