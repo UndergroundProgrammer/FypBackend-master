@@ -14,10 +14,9 @@ router.get("/cart/:id", async function (req, res, next) {
   cart.push(product);
   console.log("added to cart");
   res.cookie("cart",cart,{
-SameSite : "none",
+SameSite : "None",
 Secure: true,
 httpOnly: true,
-domain:"ar-medicare-backend.herokuapp.com"
 });
   res.send(cart);
   
