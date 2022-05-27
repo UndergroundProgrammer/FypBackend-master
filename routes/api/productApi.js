@@ -6,13 +6,14 @@ const Product = require('../../models/Product');
 
 
 
-router.get("/cart/:id", async function (req, res, next) {
+router.get("/cart/:id",verifyToken, async function (req, res, next) {
   let product = await Product.findById(req.params.id);
   console.log("Add This Product in cart/"+req.params.id);
+  product['userId']=req.user._id;
   let cart = [];
   if (req.cookies.cart) cart = req.cookies.cart;
   cart.push(product);
-  console.log("added to cart");
+  console.log(product);
   res.cookie("cart",cart,{
 sameSite :'None',
 secure: true,
