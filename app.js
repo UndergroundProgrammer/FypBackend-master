@@ -12,7 +12,7 @@ const productRouter = require('./routes/api/productApi');
 const doctorRouter = require('./routes/api/doctorApi');
 const patientRouter = require('./routes/api/patientApi');
 const respondantRouter = require('./routes/api/respondant');
-//const orderRouter = require('./routes/api/orderApi');
+const orderRouter = require('./routes/api/orderApi');
 const paymentRouter = require('./routes/api/stripe');
 
 
@@ -41,7 +41,7 @@ app.use('/api/products',productRouter);
 app.use('/api/doctor',doctorRouter);
 app.use('/api/respondant',respondantRouter);
 app.use('/api/patient',patientRouter);
-//app.use('/api/order',orderRouter);
+app.use('/api/order',orderRouter);
 app.use('/api/checkout',paymentRouter);
 
 // catch 404 and forward to error handler

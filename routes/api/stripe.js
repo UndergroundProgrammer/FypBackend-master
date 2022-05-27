@@ -18,8 +18,8 @@ router.post('/create-checkout',async (req, res)=>{
             }
       }) ,
       mode:"payment",
-    success_url:`${process.env.SERVER_URL}/payment/success`,
-    cancel_url:`${process.env.SERVER_URL}/payment/cancel`,
+    success_url:`${process.env.SERVER_URL}success`,
+    cancel_url:`${process.env.SERVER_URL}cancel`,
   });
   res.status(200).send(session);
 });
