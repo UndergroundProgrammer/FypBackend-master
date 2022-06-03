@@ -32,7 +32,7 @@ router.post("/patientDetail/:id", verifyToken, async (req, res) => {
     res.status(500).send({ message: "There is some Error " + err.message });
   }
 });
-router.delete("/patientDetail/:id", verifyToken, async (req, res) => {
+router.delete("/patientDetail/delete/:id", verifyToken, async (req, res) => {
   console.log(req.body);
   try {
     const doctor = await User.findByIdAndUpdate(
@@ -49,7 +49,7 @@ router.delete("/patientDetail/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.put("/patientDetail/:id", verifyToken, async (req, res) => {
+router.put("/patientDetail/update/:id", verifyToken, async (req, res) => {
   try {
     const doctor = await User.findById(req.params.id);
     if (doctor && doctor.userType == "doctor") {
