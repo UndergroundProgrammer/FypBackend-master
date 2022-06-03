@@ -32,7 +32,61 @@ router.post("/patientDetail/:id", verifyToken, async (req, res) => {
     res.status(500).send({ message: "There is some Error " + err.message });
   }
 });
+router.delete("/patientDetail/:id", verifyToken, async (req, res) => {
+  console.log(req.body);
+  try {
+    const doctor = await User.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: { doctorsAppointmentHistory: { patientId: req.body.patientId } },
+      }
+    ).exec();
+    if (doctor) res.status(200).send(doctor);
+    else res.status(422).send({ message: "There  is no Doctor with this ID" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "There is some Error " + err.message });
+  }
+});
 
+router.put("/patientDetail/:id", verifyToken, async (req, res) => {
+  try {
+    const doctor = await User.findById(req.params.id);
+    if (doctor && doctor.userType == "doctor") {
+      let obj = {
+        patientId: req.body.patientId,
+        username: req.body.data.username,
+        age: req.body.data.age,
+        symptoms: req.body.data.symptoms,
+        diagnosis: req.body.data.diagnosis,
+        prescription: req.body.data.prescription,
+        dateTime: req.body.data.dateTime,
+        rescheduleVisit: req.body.data.rescheduleVisit,
+      };
+
+      const deleted = await User.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          $pull: {
+            doctorsAppointmentHistory: { patientId: req.body.patientId },
+          },
+        }
+      ).exec();
+      if (deleted) {
+        console.log(obj);
+        doctor.doctorsAppointmentHistory.push(obj);
+        await doctor.save();
+        console.log(obj);
+        res.status(200).send(doctor);
+      } else {
+        res.status(422).send({ message: "There  is no Doctor with this ID" });
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "There is some Error " + err.message });
+  }
+});
 router.get("/doctorPatientsHistory/:id", verifyToken, async (req, res) => {
   try {
     const doctor = await User.findById(req.params.id);

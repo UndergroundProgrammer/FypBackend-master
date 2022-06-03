@@ -62,7 +62,13 @@ const userSchema = mongoose.Schema(
         symptoms: { type: String },
         diagnosis: { type: String },
         rescheduleVisit: { type: String },
-        prescription: { type: String },
+        prescription: [
+          {
+            medicineId: { type: String },
+            medicineTitle: { type: String },
+            medicineQuantity: { type: Number },
+          },
+        ],
       },
     ],
     doctorTime: { type: String },
