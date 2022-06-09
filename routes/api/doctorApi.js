@@ -4,8 +4,7 @@ const router = express.Router();
 const { verifyToken } = require("../../middlewares/authenticate");
 const User = require("../../models/User");
 
-router.delete("/patientDetail/delete/:id", verifyToken, async (req, res) => {
-  console.log(req.body);
+router.post("/patientDetail/delete/:id", verifyToken, async (req, res) => {
   try {
     const doctor = await User.findByIdAndUpdate(
       { _id: req.params.id },
