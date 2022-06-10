@@ -35,6 +35,29 @@ router.put("/patientDetail/update/:id", verifyToken, async (req, res) => {
         rescheduleVisit: req.body.data.rescheduleVisit,
       };
 
+      const appointments = doctor.doctorsAppointmentHistory;
+
+      var flag = 0;
+      await appointments.map((val) => {
+        if (val.patientId === req.body.patientId) {
+          val.username = req.body.data.username;
+          val.age = req.body.data.age;
+          val.symptoms = req.body.data.symptoms;
+          val.diagnosis = req.body.data.diagnosis;
+          val.prescription = req.body.data.prescription;
+          val.dateTime = req.body.data.dateTime;
+          val.rescheduleVisit = req.body.data.rescheduleVisit;
+          flag = 1;
+        }
+      });
+
+      if (flag == 1) {
+        await doctor.save();
+        return res.status(200).send({ message: "Successfully Updated" });
+      } else {
+        return res.status(422).send({ message: "There is something wrong" });
+      }
+      /*
       const deleted = await User.findByIdAndUpdate(
         { _id: req.params.id },
         {
@@ -43,6 +66,7 @@ router.put("/patientDetail/update/:id", verifyToken, async (req, res) => {
           },
         }
       ).exec();
+      console.log(deleted);
       if (deleted) {
         console.log(obj);
         doctor.doctorsAppointmentHistory.push(obj);
@@ -51,7 +75,7 @@ router.put("/patientDetail/update/:id", verifyToken, async (req, res) => {
         res.status(200).send(doctor);
       } else {
         res.status(422).send({ message: "There  is no Doctor with this ID" });
-      }
+      }*/
     }
   } catch (err) {
     console.log(err);
