@@ -24,22 +24,15 @@ router.put("/patientDetail/update/:id", verifyToken, async (req, res) => {
   try {
     const doctor = await User.findById(req.params.id);
     if (doctor && doctor.userType == "doctor") {
-      let obj = {
-        patientId: req.body.patientId,
-        username: req.body.data.username,
-        age: req.body.data.age,
-        symptoms: req.body.data.symptoms,
-        diagnosis: req.body.data.diagnosis,
-        prescription: req.body.data.prescription,
-        dateTime: req.body.data.dateTime,
-        rescheduleVisit: req.body.data.rescheduleVisit,
-      };
-
       const appointments = doctor.doctorsAppointmentHistory;
 
       var flag = 0;
       await appointments.map((val) => {
+        console.log(val.patientId);
+        console.log(req.body.patientId);
         if (val.patientId === req.body.patientId) {
+          console.log(val.patientId);
+          console.log(req.body.patientId);
           val.username = req.body.data.username;
           val.age = req.body.data.age;
           val.symptoms = req.body.data.symptoms;
@@ -57,25 +50,6 @@ router.put("/patientDetail/update/:id", verifyToken, async (req, res) => {
       } else {
         return res.status(422).send({ message: "There is something wrong" });
       }
-      /*
-      const deleted = await User.findByIdAndUpdate(
-        { _id: req.params.id },
-        {
-          $pull: {
-            doctorsAppointmentHistory: { patientId: req.body.patientId },
-          },
-        }
-      ).exec();
-      console.log(deleted);
-      if (deleted) {
-        console.log(obj);
-        doctor.doctorsAppointmentHistory.push(obj);
-        await doctor.save();
-        console.log(obj);
-        res.status(200).send(doctor);
-      } else {
-        res.status(422).send({ message: "There  is no Doctor with this ID" });
-      }*/
     }
   } catch (err) {
     console.log(err);
