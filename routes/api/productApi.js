@@ -51,7 +51,6 @@ router.get("/", async (req, res) => {
     } else {
       res.status(200).send({ message: "There is no product" });
     }
-    res.send(product);
   } catch (err) {
     res.status(500).send(err.message);
   }
