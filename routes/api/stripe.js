@@ -61,18 +61,15 @@ router.post(
 
     // Handle the event
     switch (event.type) {
-      case "checkout.session.async_payment_failed":
-        const session1 = event.data.object;
-        console.log("payment failed");
-        console.log(session1);
-        // Then define and call a function to handle the event checkout.session.async_payment_failed
+      case "payment_intent.payment_failed":
+        const paymentIntent1 = event.data.object;
+        // Then define and call a function to handle the event payment_intent.payment_failed
         break;
-      case "checkout.session.async_payment_succeeded":
-        const session = event.data.object;
-        console.log("payment succeed");
-        console.log(session);
-
-        // Then define and call a function to handle the event checkout.session.async_payment_succeeded
+      case "payment_intent.succeeded":
+        const paymentIntent = event.data.object;
+        console.log("payment successfully");
+        console.log(paymentIntent);
+        // Then define and call a function to handle the event payment_intent.succeeded
         break;
       // ... handle other event types
       default:
