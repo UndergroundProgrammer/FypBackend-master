@@ -50,7 +50,7 @@ router.post(
     const sig = request.headers["stripe-signature"];
     const endpointSecret =
       "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp";
-
+    console.log("webhook called");
     let event;
 
     try {
