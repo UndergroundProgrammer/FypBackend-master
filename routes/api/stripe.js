@@ -48,8 +48,7 @@ router.post(
   express.raw({ type: "application/json" }),
   (request, response) => {
     const sig = request.headers["stripe-signature"];
-    const endpointSecret =
-      "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp";
+    const endpointSecret = "whsec_9boLhlLo6qUfpweygBFIXGbghpxuFEqW";
     console.log("webhook called");
     let event;
 
