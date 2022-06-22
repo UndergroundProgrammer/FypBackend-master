@@ -50,8 +50,13 @@ router.post(
     const sig = request.headers["stripe-signature"];
     const endpointSecret = "whsec_9boLhlLo6qUfpweygBFIXGbghpxuFEqW";
     console.log("webhook called");
-    let event;
+    console.log(sig);
 
+    console.log(endpointSecret);
+
+    console.log(request.body);
+
+    let event;
     try {
       event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
       console.log(event);
