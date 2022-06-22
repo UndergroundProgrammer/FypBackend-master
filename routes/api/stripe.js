@@ -1,3 +1,4 @@
+const express = require("express");
 const router = require("express").Router();
 const stripe = require("stripe")(
   "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp"
@@ -42,5 +43,46 @@ router.post("/payment", (req, res) => {
     }
   );
 });
+router.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  (request, response) => {
+    const sig = request.headers["stripe-signature"];
+    const endpointSecret =
+      "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp";
+
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case "checkout.session.async_payment_failed":
+        const session1 = event.data.object;
+        console.log("payment failed");
+        console.log(session1);
+        // Then define and call a function to handle the event checkout.session.async_payment_failed
+        break;
+      case "checkout.session.async_payment_succeeded":
+        const session = event.data.object;
+        console.log("payment succeed");
+        console.log(session);
+
+        // Then define and call a function to handle the event checkout.session.async_payment_succeeded
+        break;
+      // ... handle other event types
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
+  }
+);
 
 module.exports = router;
