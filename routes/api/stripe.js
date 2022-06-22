@@ -54,11 +54,11 @@ router.post(
 
     try {
       event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+      console.log(event);
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
-
     // Handle the event
     switch (event.type) {
       case "payment_intent.payment_failed":
