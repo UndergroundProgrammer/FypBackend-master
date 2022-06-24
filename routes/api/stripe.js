@@ -1,13 +1,15 @@
 const express = require("express");
 const router = require("express").Router();
 const bodyParser = require("body-parser");
+const Product = require("../../models/Product");
 const res = require("express/lib/response");
 const stripe = require("stripe")(
   "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp"
 );
 const endpointSecret = "whsec_kCLrcl7FJDOAeolDegmfdbFXMsJ80X8v";
-
+var orderedItems = [];
 router.post("/create-checkout", async (req, res) => {
+  orderedItems = req.body;
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: req.body.map((item) => {
@@ -49,12 +51,6 @@ router.post("/payment", (req, res) => {
 router.post("/webhook", async (request, response) => {
   const sig = request.headers["stripe-signature"];
   const payLoad = request.body;
-  console.log("webhook called");
-  console.log(sig);
-
-  console.log(endpointSecret);
-
-  console.log(payLoad);
 
   let event;
   try {
@@ -73,10 +69,13 @@ router.post("/webhook", async (request, response) => {
     case "payment_intent.succeeded":
       const paymentIntent = event.data.object;
       console.log("payment successfully");
-      console.log(paymentIntent);
-      console.log("payment successfully");
-      console.log(paymentIntent.charges.object);
-      return res.redirect("https://ar-medicare.vercel.app/");
+      console.log(orderedItems);
+      orderedItems.map(item=>{
+        let product=await Product.findById(item._id);
+        product.quantity-=item.orderQuantity;
+        await product.save();
+      })
+     
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
