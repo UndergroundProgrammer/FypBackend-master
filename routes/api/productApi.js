@@ -10,13 +10,13 @@ router.post("/cart/:id", verifyToken, async function (req, res, next) {
   console.log("Add This Product in cart/" + req.params.id);
   let tempP = product;
   tempP.userId = req.body.userId;
+  console.log(req.body);
   console.log(req.body.userId);
   product.userId = req.body.userId;
   console.log(tempP);
   let cart = [];
   if (req.cookies.cart) cart = req.cookies.cart;
   cart.push(product);
-  console.log(cart);
   res.cookie("cart", cart, {
     sameSite: "None",
     secure: true,
