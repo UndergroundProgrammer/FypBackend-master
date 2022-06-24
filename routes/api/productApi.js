@@ -8,11 +8,13 @@ const { verifyToken } = require("../../middlewares/authenticate");
 router.post("/cart/:id", verifyToken, async function (req, res, next) {
   let product = await Product.findById(req.params.id);
   console.log("Add This Product in cart/" + req.params.id);
-  product.userId = req.body.userId;
+  let tempP = product;
+  tempP.userId = req.body.userId;
   let cart = [];
+  console.log(tempP);
   if (req.cookies.cart) cart = req.cookies.cart;
   cart.push(product);
-  console.log(product);
+  console.log(cart);
   res.cookie("cart", cart, {
     sameSite: "None",
     secure: true,
