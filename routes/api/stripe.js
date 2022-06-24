@@ -3,6 +3,7 @@ const router = require("express").Router();
 const stripe = require("stripe")(
   "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp"
 );
+const endpointSecret = "whsec_9boLhlLo6qUfpweygBFIXGbghpxuFEqW";
 
 router.post("/create-checkout", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -48,7 +49,6 @@ router.post(
   express.raw({ type: "application/json" }),
   (request, response) => {
     const sig = request.headers["stripe-signature"];
-    const endpointSecret = "whsec_9boLhlLo6qUfpweygBFIXGbghpxuFEqW";
     console.log("webhook called");
     console.log(sig);
 
