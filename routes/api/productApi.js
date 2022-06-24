@@ -10,7 +10,7 @@ router.post("/cart/:id", verifyToken, async function (req, res, next) {
   console.log("Add This Product in cart/" + req.params.id);
   let tempP = product;
   tempP.userId = req.body.userId;
-  console.log(req.body.userId);
+  console.log(req.body);
   let cart = [];
   console.log(tempP);
   if (req.cookies.cart) cart = req.cookies.cart;
