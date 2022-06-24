@@ -2,6 +2,7 @@ const express = require("express");
 const router = require("express").Router();
 const bodyParser = require("body-parser");
 const Product = require("../../models/Product");
+const axios = require("axios");
 const res = require("express/lib/response");
 const { redirect } = require("express/lib/response");
 const stripe = require("stripe")(
@@ -74,11 +75,10 @@ router.post("/webhook", async (request, response) => {
         product.quantity = product.quantity - item.orderQuantity;
         await product.save();
       });
-      response
-        .writeHead(301, {
-          Location: "https://ar-medicare.vercel.app/",
-        })
-        .end();
+      await axios
+        .get("https://ar-medicare.vercel.app")
+        .then((res) => res.clearCookie("cart"))
+        .catch((err) => console.log(err));
 
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
@@ -86,7 +86,7 @@ router.post("/webhook", async (request, response) => {
     default:
       console.log(`Unhandled event type ${event.type}`);
   }
-  response.clearCookie("cart");
+  response.cl;
   response.status(200);
   // Return a 200 response to acknowledge receipt of the event
 });
