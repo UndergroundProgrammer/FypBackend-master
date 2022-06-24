@@ -3,6 +3,7 @@ const router = require("express").Router();
 const bodyParser = require("body-parser");
 const Product = require("../../models/Product");
 const res = require("express/lib/response");
+const { redirect } = require("express/lib/response");
 const stripe = require("stripe")(
   "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp"
 );
@@ -73,7 +74,7 @@ router.post("/webhook", async (request, response) => {
         product.quantity = product.quantity - item.orderQuantity;
         await product.save();
       });
-      response.send(200).redirect("https://ar-medicare.vercel.app");
+      redirect("https://ar-medicare.vercel.app");
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
