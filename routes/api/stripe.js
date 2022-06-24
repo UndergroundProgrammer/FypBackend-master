@@ -45,52 +45,44 @@ router.post("/payment", (req, res) => {
     }
   );
 });
-router.post(
-  "/webhook",
-  bodyParser.raw({ type: "application/json" }),
-  async (request, response) => {
-    const sig = request.headers["stripe-signature"];
-    const payLoad = request.body;
-    console.log("webhook called");
-    console.log(sig);
+router.post("/webhook", async (request, response) => {
+  const sig = request.headers["stripe-signature"];
+  const payLoad = request.body;
+  console.log("webhook called");
+  console.log(sig);
 
-    console.log(endpointSecret);
+  console.log(endpointSecret);
 
-    console.log(payLoad);
+  console.log(payLoad);
 
-    let event;
-    try {
-      event = await stripe.webhooks.constructEvent(
-        payLoad,
-        sig,
-        endpointSecret
-      );
-      console.log(event);
-    } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
-      console.log("webhook failed");
-      return;
-    }
-    // Handle the event
-    switch (event.type) {
-      case "payment_intent.payment_failed":
-        const paymentIntent1 = event.data.object;
-        // Then define and call a function to handle the event payment_intent.payment_failed
-        break;
-      case "payment_intent.succeeded":
-        const paymentIntent = event.data.object;
-        console.log("payment successfully");
-        console.log(paymentIntent);
-        // Then define and call a function to handle the event payment_intent.succeeded
-        break;
-      // ... handle other event types
-      default:
-        console.log(`Unhandled event type ${event.type}`);
-    }
-
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
+  let event;
+  try {
+    event = await stripe.webhooks.constructEvent(payLoad, sig, endpointSecret);
+    console.log(event);
+  } catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`);
+    console.log("webhook failed");
+    return;
   }
-);
+  // Handle the event
+  switch (event.type) {
+    case "payment_intent.payment_failed":
+      const paymentIntent1 = event.data.object;
+      // Then define and call a function to handle the event payment_intent.payment_failed
+      break;
+    case "payment_intent.succeeded":
+      const paymentIntent = event.data.object;
+      console.log("payment successfully");
+      console.log(paymentIntent);
+      // Then define and call a function to handle the event payment_intent.succeeded
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  response.send();
+});
 
 module.exports = router;
