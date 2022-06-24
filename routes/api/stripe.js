@@ -78,9 +78,9 @@ router.post("/webhook", async (request, response) => {
         await product.save();
       });
       const responseT = await axios.get(
-        "https://ar-medicare-backend.herokuapp.com/success"
+        "https://ar-medicare-backend.herokuapp.com/api/products/clearCart"
       );
-      responseT.clearCookie("cart");
+      
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types

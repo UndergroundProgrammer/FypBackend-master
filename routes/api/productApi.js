@@ -35,7 +35,16 @@ router.get("/cart/remove/:id", async function (req, res, next) {
   });
   res.send(cart);
 });
-
+router.get("/clearCart", async (req, res) => {
+  try {
+    console.log(req.body);
+    console.log("items cleare dcalled");
+    res.clearCookie("cart");
+    return res.status(200);
+  } catch (err) {
+    return res.status(500).send({ message: "This product is invalid" });
+  }
+});
 router.get("/cart", async function (req, res, next) {
   let cart = req.cookies.cart;
   if (!cart) cart = [];
@@ -101,7 +110,7 @@ router.delete("/:id", async function (req, res) {
   } catch (err) {
     return res.status(404).send({ message: "Id is not a valid" });
   }
-});  
+});
 router.post("/", async (req, res) => {
   try {
     console.log(req.body);
@@ -112,4 +121,5 @@ router.post("/", async (req, res) => {
     return res.status(500).send({ message: "This product is invalid" });
   }
 });
+
 module.exports = router;
