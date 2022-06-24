@@ -1,6 +1,7 @@
 const express = require("express");
 const router = require("express").Router();
 const bodyParser = require("body-parser");
+const res = require("express/lib/response");
 const stripe = require("stripe")(
   "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp"
 );
@@ -75,7 +76,7 @@ router.post("/webhook", async (request, response) => {
       console.log(paymentIntent);
       console.log("payment successfully");
       console.log(paymentIntent.charges.object);
-
+      return res.redirect("https://ar-medicare.vercel.app/");
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
