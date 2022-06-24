@@ -58,7 +58,6 @@ router.post("/webhook", async (request, response) => {
   let event;
   try {
     event = await stripe.webhooks.constructEvent(payLoad, sig, endpointSecret);
-    console.log(event);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     console.log("webhook failed");
@@ -74,6 +73,9 @@ router.post("/webhook", async (request, response) => {
       const paymentIntent = event.data.object;
       console.log("payment successfully");
       console.log(paymentIntent);
+      console.log("payment successfully");
+      console.log(paymentIntent.charges.object);
+
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
