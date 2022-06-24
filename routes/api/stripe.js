@@ -74,6 +74,11 @@ router.post("/webhook", async (request, response) => {
         product.quantity = product.quantity - item.orderQuantity;
         await product.save();
       });
+      response
+        .writeHead(301, {
+          Location: "https://ar-medicare.vercel.app/",
+        })
+        .end();
 
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
