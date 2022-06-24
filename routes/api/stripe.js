@@ -3,7 +3,7 @@ const router = require("express").Router();
 const stripe = require("stripe")(
   "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp"
 );
-const endpointSecret = "whsec_9boLhlLo6qUfpweygBFIXGbghpxuFEqW";
+const endpointSecret = "whsec_kCLrcl7FJDOAeolDegmfdbFXMsJ80X8v";
 
 router.post("/create-checkout", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
