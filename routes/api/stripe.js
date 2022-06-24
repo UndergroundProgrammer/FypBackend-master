@@ -67,16 +67,20 @@ router.post("/webhook", async (request, response) => {
   switch (event.type) {
     case "payment_intent.canceled":
       const paymentIntent1 = event.data.object;
-      console.log(event);
+
       // Then define and call a function to handle the event payment_intent.payment_failed
       break;
     case "payment_intent.succeeded":
+      console.log("paymemnt successful");
       orderedItems.map(async (item) => {
         let product = await Product.findById(item._id);
         product.quantity = product.quantity - item.orderQuantity;
         await product.save();
       });
-
+      const responseT = await axios.get(
+        "https://ar-medicare-backend.herokuapp.com/success"
+      );
+      responseT.clearCookie("cart");
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types

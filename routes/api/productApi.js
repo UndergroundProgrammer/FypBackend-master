@@ -101,8 +101,7 @@ router.delete("/:id", async function (req, res) {
   } catch (err) {
     return res.status(404).send({ message: "Id is not a valid" });
   }
-});
-//update
+});  
 router.post("/", async (req, res) => {
   try {
     console.log(req.body);
