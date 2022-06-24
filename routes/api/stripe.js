@@ -48,6 +48,13 @@ router.post("/payment", (req, res) => {
     }
   );
 });
+const decreaseQuanity=async ()=>{
+        orderedItems.map(item=>{
+        let product=await Product.findById(item._id);
+        product.quantity=product.quantity-item.orderQuantity;
+        await product.save();
+      });
+}
 router.post("/webhook", async (request, response) => {
   const sig = request.headers["stripe-signature"];
   const payLoad = request.body;
@@ -70,7 +77,7 @@ router.post("/webhook", async (request, response) => {
       const paymentIntent = event.data.object;
       console.log("payment successfully");
       console.log(orderedItems);
-
+      decreaseQuanity();
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
