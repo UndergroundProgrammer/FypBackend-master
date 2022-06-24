@@ -49,16 +49,17 @@ router.post(
   express.raw({ type: "application/json" }),
   (request, response) => {
     const sig = request.headers["stripe-signature"];
+    const payLoad = request.rawBody;
     console.log("webhook called");
     console.log(sig);
 
     console.log(endpointSecret);
 
-    console.log(request.body);
+    console.log(request.rawBody);
 
     let event;
     try {
-      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(payLoad, sig, endpointSecret);
       console.log(event);
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
