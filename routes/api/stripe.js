@@ -65,8 +65,9 @@ router.post("/webhook", async (request, response) => {
   }
   // Handle the event
   switch (event.type) {
-    case "payment_intent.payment_failed":
+    case "payment_intent.canceled":
       const paymentIntent1 = event.data.object;
+      console.log(event);
       // Then define and call a function to handle the event payment_intent.payment_failed
       break;
     case "payment_intent.succeeded":
@@ -75,10 +76,6 @@ router.post("/webhook", async (request, response) => {
         product.quantity = product.quantity - item.orderQuantity;
         await product.save();
       });
-      await axios
-        .get("https://ar-medicare.vercel.app")
-        .then((res) => res.clearCookie("cart"))
-        .catch((err) => console.log(err));
 
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
