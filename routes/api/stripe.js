@@ -49,13 +49,13 @@ router.post(
   express.raw({ type: "application/json" }),
   (request, response) => {
     const sig = request.headers["stripe-signature"];
-    const payLoad = request.rawBody;
+    const payLoad = request.body;
     console.log("webhook called");
     console.log(sig);
 
     console.log(endpointSecret);
 
-    console.log(request.rawBody);
+    console.log(payLoad);
 
     let event;
     try {
