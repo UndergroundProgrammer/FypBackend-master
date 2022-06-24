@@ -48,11 +48,12 @@ router.post("/payment", (req, res) => {
     }
   );
 });
-const decreaseQuanity=async ()=>{
+async function decreaseQuanity(){
         orderedItems.map(item=>{
         let product=await Product.findById(item._id);
         product.quantity=product.quantity-item.orderQuantity;
         await product.save();
+        console.log("quantity decreased");
       });
 }
 router.post("/webhook", async (request, response) => {
