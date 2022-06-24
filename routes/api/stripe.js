@@ -1,5 +1,6 @@
 const express = require("express");
 const router = require("express").Router();
+const bodyParser = require("body-parser");
 const stripe = require("stripe")(
   "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp"
 );
@@ -46,7 +47,7 @@ router.post("/payment", (req, res) => {
 });
 router.post(
   "/webhook",
-  express.raw({ type: "application/json" }),
+  bodyParser.raw({ type: "application/json" }),
   async (request, response) => {
     const sig = request.headers["stripe-signature"];
     const payLoad = request.body;
