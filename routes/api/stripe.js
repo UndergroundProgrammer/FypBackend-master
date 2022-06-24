@@ -1,4 +1,4 @@
-const bodyParser = require("body-parser");
+const express = require("express");
 const router = require("express").Router();
 const stripe = require("stripe")(
   "sk_test_51KuvSGJ5s3GMFY7xzIibr4HHaFgEAiugF9pNWKZA7nrt2rdSemuLfgooccBNZ6PySxnnhkEEfUt5kCruaM6RtD9i00b31o46cp"
@@ -46,7 +46,7 @@ router.post("/payment", (req, res) => {
 });
 router.post(
   "/webhook",
-  bodyParser.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }),
   (request, response) => {
     const sig = request.headers["stripe-signature"];
     console.log("webhook called");
@@ -62,6 +62,7 @@ router.post(
       console.log(event);
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
+      console.log("webhook failed");
       return;
     }
     // Handle the event
