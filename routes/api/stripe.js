@@ -72,7 +72,7 @@ router.post("/webhook", async (request, response) => {
     case "payment_intent.succeeded":
       const paymentIntent = event.data.object;
       console.log("payment successfully");
-      console.log(paymentIntent, charges, data);
+      console.log(paymentIntent.charges.data);
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
