@@ -68,9 +68,6 @@ router.post("/webhook", async (request, response) => {
       // Then define and call a function to handle the event payment_intent.payment_failed
       break;
     case "payment_intent.succeeded":
-      const paymentIntent = event.data.object;
-      console.log("payment successfully");
-      console.log(orderedItems);
       orderedItems.map(async (item) => {
         let product = await Product.findById(item._id);
         product.quantity = product.quantity - item.orderQuantity;
@@ -85,7 +82,7 @@ router.post("/webhook", async (request, response) => {
   }
 
   // Return a 200 response to acknowledge receipt of the event
-  response.send();
+  response.send(200).redirect("https://ar-medicare.vercel.app");
 });
 
 module.exports = router;
