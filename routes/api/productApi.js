@@ -9,8 +9,9 @@ router.post("/cart/:id", verifyToken, async function (req, res, next) {
   let product = await Product.findById(req.params.id);
   console.log("Add This Product in cart/" + req.params.id);
   let tempP = product;
+  tempP.userId = req.body.userId;
   product.userId = req.body.userId;
-  console.log(req.body);
+  console.log(tempP);
   let cart = [];
   if (req.cookies.cart) cart = req.cookies.cart;
   cart.push(product);
