@@ -70,12 +70,7 @@ router.post("/webhook", async (request, response) => {
       const paymentIntent = event.data.object;
       console.log("payment successfully");
       console.log(orderedItems);
-      orderedItems.map(item=>{
-        let product=await Product.findById(item._id);
-        product.quantity=product.quantity-item.orderQuantity;
-        await product.save();
-      })
-     
+
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types
