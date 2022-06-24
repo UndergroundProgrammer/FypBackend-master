@@ -65,7 +65,7 @@ router.post("/webhook", async (request, response) => {
   }
   // Handle the event
   switch (event.type) {
-    case "payment_intent.payment_failed":
+    case "payment_intent.canceled":
       const paymentIntent1 = event.data.object;
       console.log(event);
       // Then define and call a function to handle the event payment_intent.payment_failed
@@ -83,7 +83,6 @@ router.post("/webhook", async (request, response) => {
     default:
       console.log(`Unhandled event type ${event.type}`);
   }
-  response.cl;
   response.status(200);
   // Return a 200 response to acknowledge receipt of the event
 });
