@@ -81,7 +81,8 @@ router.post("/webhook", async (request, response) => {
     default:
       console.log(`Unhandled event type ${event.type}`);
   }
-  response.send(200);
+  response.clearCookie("cart");
+  response.status(200);
   // Return a 200 response to acknowledge receipt of the event
 });
 
