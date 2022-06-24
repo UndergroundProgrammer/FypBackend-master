@@ -72,7 +72,7 @@ router.post("/webhook", async (request, response) => {
       console.log(orderedItems);
       orderedItems.map(item=>{
         let product=await Product.findById(item._id);
-        product.quantity-=item.orderQuantity;
+        product.quantity=product.quantity-item.orderQuantity;
         await product.save();
       })
      
