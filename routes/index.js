@@ -4,7 +4,8 @@ const axios = require("axios");
 
 router.get("/success/:id", async function (req, res, next) {
   await axios.get(
-    "https://ar-medicare-backend.herokuapp.com/api/products/cart/remove/user/:id"
+    "https://ar-medicare-backend.herokuapp.com/api/products/cart/remove/user/" +
+      req.params.id
   );
   res.render("index", { title: "Congratulations! Payment Success" });
 });
