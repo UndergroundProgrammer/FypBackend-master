@@ -52,11 +52,12 @@ router.get("/cart/remove/:id", async function (req, res, next) {
 router.get("/cart/remove/user/:id", async function (req, res, next) {
   let cart = [];
   if (req.cookies.cart) cart = req.cookies.cart;
-  let filterCart = cart.filter((item) => {
+  let filterCart = await cart.filter((item) => {
     console.log("item ermoved");
     return item.userId != req.params.id;
   });
-  res.cookie("cart", filterCart, {
+  console.log(filterCart);
+  await res.cookie("cart", filterCart, {
     sameSite: "None",
     secure: true,
     httpOnly: true,
