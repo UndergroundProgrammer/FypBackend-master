@@ -12,7 +12,6 @@ const endpointSecret = "whsec_kCLrcl7FJDOAeolDegmfdbFXMsJ80X8v";
 var orderedItems = [];
 router.post("/create-checkout", async (req, res) => {
   orderedItems = req.body;
-  console.log(orderedItems[0].userId);
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: req.body.map((item) => {
