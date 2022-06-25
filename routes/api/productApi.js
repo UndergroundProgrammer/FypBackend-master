@@ -53,6 +53,7 @@ router.get("/cart/remove/user/:id", async function (req, res, next) {
   let cart = [];
   if (req.cookies.cart) cart = req.cookies.cart;
   let filterCart = cart.filter((item) => {
+    console.log("item ermoved");
     return item.userId != req.params.id;
   });
   res.cookie("cart", filterCart, {
