@@ -49,7 +49,19 @@ router.get("/cart/remove/:id", async function (req, res, next) {
   });
   res.send(cart);
 });
-
+router.get("/cart/remove/user/:id", async function (req, res, next) {
+  let cart = [];
+  if (req.cookies.cart) cart = req.cookies.cart;
+  let filterCart = cart.filter((item) => {
+    return item.userId != req.params.id;
+  });
+  res.cookie("cart", filterCart, {
+    sameSite: "None",
+    secure: true,
+    httpOnly: true,
+  });
+  res.send(cart);
+});
 router.get("/cart", async function (req, res, next) {
   let cart = req.cookies.cart;
   if (!cart) cart = [];
@@ -116,6 +128,7 @@ router.delete("/:id", async function (req, res) {
     return res.status(404).send({ message: "Id is not a valid" });
   }
 });
+
 router.post("/", async (req, res) => {
   try {
     console.log(req.body);

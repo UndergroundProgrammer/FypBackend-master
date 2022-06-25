@@ -12,6 +12,7 @@ const endpointSecret = "whsec_kCLrcl7FJDOAeolDegmfdbFXMsJ80X8v";
 var orderedItems = [];
 router.post("/create-checkout", async (req, res) => {
   orderedItems = req.body;
+  console.log(orderedItems[0].userId);
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: req.body.map((item) => {
@@ -28,7 +29,7 @@ router.post("/create-checkout", async (req, res) => {
     }),
 
     mode: "payment",
-    success_url: `${process.env.SERVER_URL}success`,
+    success_url: `${process.env.SERVER_URL}success/${orderedItems[0].userId}`,
     cancel_url: `${process.env.SERVER_URL}cancel`,
   });
   res.status(200).send(session);
@@ -78,6 +79,7 @@ router.post("/webhook", async (request, response) => {
         product.quantity = product.quantity - item.orderQuantity;
         await product.save();
       });
+
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     // ... handle other event types

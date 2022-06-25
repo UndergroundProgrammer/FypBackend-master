@@ -1,9 +1,11 @@
 var express = require("express");
 var router = express.Router();
+const axios = require("axios");
 
-router.get("/success", function (req, res, next) {
-  console.log(req);
-  res.clearCookie("cart");
+router.get("/success/:id", async function (req, res, next) {
+  await axios.get(
+    "https://ar-medicare-backend.herokuapp.com/api/products/cart/remove/user/:id"
+  );
   res.render("index", { title: "Congratulations! Payment Success" });
 });
 
