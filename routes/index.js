@@ -3,10 +3,11 @@ var router = express.Router();
 const axios = require("axios");
 
 router.get("/success/:id", async function (req, res, next) {
-  await axios.get(
+  let response = await axios.get(
     "https://ar-medicare-backend.herokuapp.com/api/products/cart/remove/user/" +
       req.params.id
   );
+  console.log(response);
   res.render("index", { title: "Congratulations! Payment Success" });
 });
 
