@@ -14,21 +14,25 @@ router.post("/cart/:id", verifyToken, async function (req, res, next) {
     quantity: product.quantity,
     orderQuantity: product.orderQuantity,
     userId: req.body.userId,
+    price: product.price,
+    description: product.description,
   };
   tempP.userId = req.body.userId;
-  console.log(req.body);
-  console.log(req.body.userId);
-  product.userId = req.body.userId;
+
   console.log(tempP);
   let cart = [];
   if (req.cookies.cart) cart = req.cookies.cart;
-  cart.push(product);
-  res.cookie("cart", cart, {
-    sameSite: "None",
-    secure: true,
-    httpOnly: true,
-  });
-  res.send(cart);
+  if (
+    !cart.some((item) => item._id == tempP._id && item.userId == tempP.userId)
+  ) {
+    cart.push(tempP);
+    res.cookie("cart", cart, {
+      sameSite: "None",
+      secure: true,
+      httpOnly: true,
+    });
+    res.send(cart);
+  } else res.status(422).send({ message: "This item already added to cart" });
 });
 
 router.get("/cart/remove/:id", async function (req, res, next) {
