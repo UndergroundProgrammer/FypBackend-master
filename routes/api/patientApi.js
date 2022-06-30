@@ -71,10 +71,8 @@ router.get("/doctors/:id", verifyToken, async (req, res) => {
     const patient = await User.findById(req.params.id);
     if (patient && patient.userType == "patient") {
       const doctors = patient.doctors;
-      console.log(doctors);
       if (doctors.length > 0) {
         const records = await User.find().where("_id").in(doctors).exec();
-        console.log(records);
         res.status(200).send(records);
       } else {
         res.status(422).send({
@@ -153,7 +151,6 @@ router.post("/request/doctor/:id", verifyToken, async (req, res) => {
           return;
         }
       });
-
       if (check === 1) {
         return res.status(422).json({
           message: "This Doctor is already Appointed by current Patient",
