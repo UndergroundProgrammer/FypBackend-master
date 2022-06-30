@@ -55,7 +55,7 @@ var port = "3000";
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(process.env.PORT || 3000);
 server.on("error", onError);
 server.on("listening", onListening);
 
