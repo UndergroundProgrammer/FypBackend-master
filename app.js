@@ -25,9 +25,7 @@ app.use(cors({ origin: true, credentials: true }));
 var server = http.createServer(app);
 
 const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
+  cors: { origin: true, credentials: true },
 });
 
 io.on("connection", (socket) => {
@@ -63,7 +61,6 @@ server.on("listening", onListening);
 
 const dotenv = require("dotenv");
 
-app.use(cors({ origin: true, credentials: true }));
 dotenv.config();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
