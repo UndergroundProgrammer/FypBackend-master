@@ -195,6 +195,7 @@ router.post("/request/doctor/:id", verifyToken, async (req, res) => {
 });
 
 router.post("/checkdoctor/availability/:id", verifyToken, async (req, res) => {
+  console.log(re.body);
   try {
     let patient = await User.findById(req.params.id, {
       _id: 1,
@@ -211,7 +212,7 @@ router.post("/checkdoctor/availability/:id", verifyToken, async (req, res) => {
       doctorCustomers: 1,
       img: 1,
     });
-    console.log(re.body);
+
     console.log(doctor);
     if (patient && doctor) {
       var check = 0;
