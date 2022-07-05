@@ -195,7 +195,6 @@ router.post("/request/doctor/:id", verifyToken, async (req, res) => {
 });
 
 router.post("/checkdoctor/availability/:id", verifyToken, async (req, res) => {
-  console.log(req.body);
   try {
     console.log(req.body);
     let patient = await User.findById(req.params.id, {
@@ -251,11 +250,9 @@ router.post("/checkdoctor/availability/:id", verifyToken, async (req, res) => {
         return res.status(422).json({
           message: "This doctor is already booked for the current slot",
         });
+      } else {
+        return res.status(200).json({ message: "ok" });
       }
-
-      return res
-        .status(200)
-        .json({ Patient: patient, Doctor: doctor, Response: response });
     } else {
       return res
         .status(422)
