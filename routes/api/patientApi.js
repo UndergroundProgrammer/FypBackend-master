@@ -259,7 +259,7 @@ router.post("/checkdoctor/availability/:id", verifyToken, async (req, res) => {
         .json({ message: "Patient or doctor Id is incorrect" });
     }
   } catch (err) {
-    return res.status(500).json({ Message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 });
 module.exports = router;
