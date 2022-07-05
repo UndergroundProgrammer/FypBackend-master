@@ -195,8 +195,9 @@ router.post("/request/doctor/:id", verifyToken, async (req, res) => {
 });
 
 router.post("/checkdoctor/availability/:id", verifyToken, async (req, res) => {
+  console.log(req.body);
   try {
-    console.log(re.body);
+    console.log(req.body);
     let patient = await User.findById(req.params.id, {
       _id: 1,
       username: 1,
