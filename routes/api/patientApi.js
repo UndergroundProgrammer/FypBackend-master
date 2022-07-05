@@ -203,6 +203,7 @@ router.post("/checkdoctor/availability/:id", verifyToken, async (req, res) => {
       doctors: 1,
       img: 1,
     });
+
     let doctor = await User.findById(req.body.doctorId, {
       _id: 1,
       username: 1,
@@ -210,6 +211,8 @@ router.post("/checkdoctor/availability/:id", verifyToken, async (req, res) => {
       doctorCustomers: 1,
       img: 1,
     });
+    console.log(re.body);
+    console.log(doctor);
     if (patient && doctor) {
       var check = 0;
       await patient.doctors.forEach((value, index) => {
